@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PKA Accounting - Proactive Tax Planning & Filing services for Kenyan businesses.">
+  <title>Tax Planning & Filing — PKA Accounting & Advisory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'pka-orange':'#F97316','pka-orange-dark':'#EA580C','pka-blue':'#3B82F6','pka-yellow':'#F59E0B','pka-red':'#EF4444','pka-green':'#22C55E','pka-bg':'#F8FAFC','pka-dark':'#0F172A','pka-text':'#1E293B','pka-muted':'#64748B','pka-light':'#94A3B8','pka-border':'#E2E8F0'
+          },
+          fontFamily:{'sans':['Inter','system-ui','sans-serif']}
+        }
+      }
+    }
+  </script>
+  <style>
+    /* ===== BASE ===== */
+    *{scroll-behavior:smooth;margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',system-ui,sans-serif;background:#F8FAFC;color:#1E293B;transition:background-color .3s ease,color .3s ease;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    .dark body{background:#0F172A;color:#E2E8F0}
+    ::selection{background:#F97316;color:#fff}
+
+    /* ===== CUSTOM SCROLLBAR ===== */
+    ::-webkit-scrollbar{width:8px;height:8px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:10px}
+    ::-webkit-scrollbar-thumb:hover{background:#94A3B8}
+    .dark ::-webkit-scrollbar-thumb{background:#334155}
+    .dark ::-webkit-scrollbar-thumb:hover{background:#475569}
+
+    /* ===== SKIP LINK ===== */
+    .skip-link{position:absolute;top:-100%;left:16px;z-index:999;background:#F97316;color:#fff;padding:8px 16px;border-radius:0 0 8px 8px;font-size:13px;font-weight:600;transition:top .2s ease}
+    .skip-link:focus{top:0}
+
+    /* ===== SCROLL PROGRESS ===== */
+    #scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#F97316,#FB923C);z-index:100;width:0;transition:none;pointer-events:none}
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+    .afu{opacity:0;animation:fadeUp .8s ease-out forwards}
+    .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+
+    /* ===== REVEAL ===== */
+    .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.5,0,0,1)}
+    .reveal.vis{opacity:1;transform:translateY(0)}
+
+    /* ===== NAV ===== */
+    .nav-solid{background:rgba(248,250,252,.92);backdrop-filter:blur(14px);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+    .dark .nav-solid{background:rgba(15,23,42,.92);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+    .nav-link{color:#64748B}
+    .nav-link:hover{color:#1E293B}
+    .dark .nav-link{color:#94A3B8}
+    .dark .nav-link:hover{color:#E2E8F0}
+    .nav-link-active{position:relative;color:#1E293B !important}
+    .dark .nav-link-active{color:#E2E8F0 !important}
+    .nav-link-active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:#F97316;border-radius:1px}
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle{position:relative;width:56px;height:28px;border-radius:14px;background:#E2E8F0;cursor:pointer;transition:all .3s ease;border:none;padding:0}
+    .dark .theme-toggle{background:#334155}
+    .theme-toggle-circle{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:white;transition:all .3s cubic-bezier(.25,.46,.45,.94);box-shadow:0 2px 4px rgba(0,0,0,.1)}
+    .dark .theme-toggle-circle{left:31px;background:#1E293B}
+    .theme-toggle-icon{position:absolute;top:50%;transform:translateY(-50%);transition:all .3s ease}
+    .theme-toggle .sun-icon{left:6px;opacity:1}.dark .theme-toggle .sun-icon{opacity:0;left:-10px}
+    .theme-toggle .moon-icon{right:6px;opacity:0}.dark .theme-toggle .moon-icon{opacity:1;right:6px}
+
+    /* ===== MOBILE MENU ===== */
+    .mob-menu{transform:translateX(100%);transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
+    .mob-menu.open{transform:translateX(0)}
+
+    /* ===== CUSTOM PAGE STYLES ===== */
+    .fp-feature-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+    @media(min-width:640px){.fp-feature-grid{grid-template-columns:1fr 1fr}}
+    .fp-process-step{display:flex;gap:1.25rem;position:relative}
+    .fp-process-step+.fp-process-step{margin-top:2rem}
+    .fp-process-step+.fp-process-step::before{content:'';position:absolute;left:23px;top:48px;bottom:-2rem;width:2px;background:#E2E8F0}
+    .dark .fp-process-step+.fp-process-step::before{background:#334155}
+    .fp-process-dot{width:48px;height:48px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:white}
+    .fp-include-row{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid rgba(226,232,240,.5)}
+    .fp-include-row:last-child{border-bottom:none}
+    .dark .fp-include-row{border-color:rgba(51,65,85,.5)}
+
+    /* ===== TOAST ===== */
+    #toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+    .toast{pointer-events:auto;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:500;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.15);animation:slideInRight .4s ease-out forwards;display:flex;align-items:center;gap:8px;max-width:320px}
+    .toast-hide{opacity:0;transform:translateX(20px);transition:all .3s ease}
+
+    /* ===== COOKIE BANNER ===== */
+    #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:55;background:rgba(15,23,42,.95);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.08);padding:16px 20px;transform:translateY(100%);transition:transform .4s ease}
+    #cookie-banner.show{transform:translateY(0)}
+
+    /* ===== SOCIAL ICONS ===== */
+    .social-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);transition:all .25s ease}
+    .social-icon:hover{background:rgba(255,255,255,.18);transform:translateY(-3px) scale(1.05)}
+
+    /* ===== BACK TO TOP ===== */
+    .btt{transition:all .3s ease}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:639px){.nav-logo{height:2.2rem !important}#toast-container{bottom:80px;right:16px;left:16px}.toast{max-width:100%}}
+    @media(min-width:640px) and (max-width:1023px){.nav-logo{height:2.8rem !important}}
+    @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.afu{opacity:1;transform:none}.reveal{opacity:1;transform:none}}
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- SKIP LINK -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress"></div>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-solid">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 h-[72px] sm:h-[80px] lg:h-[96px] flex items-center justify-between">
+      <a href="index.html" class="flex items-center flex-shrink-0">
+        <img src="logo.png" alt="PKA Logo" class="nav-logo h-[2.2rem] sm:h-[2.8rem] lg:h-[3.8rem] w-auto object-contain">
+      </a>
+      <div class="hidden lg:flex items-center gap-7 xl:gap-9">
+        <a href="index.html" class="nav-link text-[15px] xl:text-[16px] font-medium transition-colors">Home</a>
+        <a href="about.html" class="nav-link text-[15px] xl:text-[16px] font-medium transition-colors">About</a>
+        <a href="services.html" class="nav-link nav-link-active text-[15px] xl:text-[16px] font-medium transition-colors">Services</a>
+        <a href="industries.html" class="nav-link text-[15px] xl:text-[16px] font-medium transition-colors">Industries</a>
+        <a href="contact.html" class="nav-link text-[15px] xl:text-[16px] font-medium transition-colors">Contact</a>
+      </div>
+      <div class="hidden lg:flex items-center gap-4 xl:gap-5">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark Mode"><div class="theme-toggle-circle"></div><i data-lucide="sun" class="w-3.5 h-3.5 text-yellow-500 theme-toggle-icon sun-icon"></i><i data-lucide="moon" class="w-3.5 h-3.5 text-blue-300 theme-toggle-icon moon-icon"></i></button>
+        <a href="tel:+254720854756" class="text-[14px] xl:text-[15px] font-medium text-pka-muted flex items-center gap-2 transition-colors"><i data-lucide="phone" class="w-4 h-4"></i><span class="hidden xl:inline">+254 720 854 756</span></a>
+        <a href="contact.html" class="magnetic-btn bg-pka-orange text-white px-6 xl:px-7 py-2.5 xl:py-3 rounded-full text-[14px] xl:text-[15px] font-semibold hover:bg-pka-orange-dark transition-colors whitespace-nowrap shadow-lg shadow-orange-500/20">Free Consultation</a>
+      </div>
+      <div class="flex lg:hidden items-center gap-2.5">
+        <button class="theme-toggle sm:hidden" onclick="toggleTheme()" aria-label="Toggle Dark Mode"><div class="theme-toggle-circle"></div><i data-lucide="sun" class="w-3.5 h-3.5 text-yellow-500 theme-toggle-icon sun-icon"></i><i data-lucide="moon" class="w-3.5 h-3.5 text-blue-300 theme-toggle-icon moon-icon"></i></button>
+        <button id="mob-open" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800" aria-label="Open menu"><i data-lucide="menu" class="w-5 h-5 text-pka-text"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mob-menu" class="mob-menu fixed inset-0 z-[60] bg-pka-bg" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div class="px-4 sm:px-5 h-[72px] sm:h-[80px] flex items-center justify-between">
+      <a href="index.html" class="flex items-center flex-shrink-0"><img src="logo.png" alt="PKA Logo" class="nav-logo h-[2.2rem] sm:h-[2.8rem] w-auto object-contain"></a>
+      <div class="flex items-center gap-2.5">
+        <button class="theme-toggle hidden sm:block" onclick="toggleTheme()" aria-label="Toggle Dark Mode"><div class="theme-toggle-circle"></div><i data-lucide="sun" class="w-3.5 h-3.5 text-yellow-500 theme-toggle-icon sun-icon"></i><i data-lucide="moon" class="w-3.5 h-3.5 text-blue-300 theme-toggle-icon moon-icon"></i></button>
+        <button id="mob-close" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800" aria-label="Close menu"><i data-lucide="x" class="w-5 h-5 text-pka-text"></i></button>
+      </div>
+    </div>
+    <div class="flex flex-col items-center justify-center h-[calc(100%-72px)] sm:h-[calc(100%-80px)] gap-7 px-4">
+      <a href="index.html" class="text-2xl sm:text-3xl font-semibold text-pka-text hover:text-pka-orange transition-colors">Home</a>
+      <a href="about.html" class="text-2xl sm:text-3xl font-semibold text-pka-text hover:text-pka-orange transition-colors">About</a>
+      <a href="services.html" class="text-2xl sm:text-3xl font-semibold text-pka-orange">Services</a>
+      <a href="industries.html" class="text-2xl sm:text-3xl font-semibold text-pka-text hover:text-pka-orange transition-colors">Industries</a>
+      <a href="contact.html" class="text-2xl sm:text-3xl font-semibold text-pka-text hover:text-pka-orange transition-colors">Contact</a>
+      <a href="contact.html" class="mt-4 bg-pka-orange text-white px-8 py-4 rounded-full text-[15px] sm:text-[16px] font-semibold hover:bg-pka-orange-dark transition-colors w-full max-w-xs text-center">Free Consultation</a>
+      <a href="tel:+254720854756" class="text-pka-muted text-sm flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i>+254 720 854 756</a>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- BREADCRUMB -->
+    <div class="pt-[72px] sm:pt-[80px] lg:pt-[96px] bg-pka-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 py-3">
+        <nav class="flex items-center gap-2 text-[11px] sm:text-[12px]" aria-label="Breadcrumb">
+          <a href="index.html" class="text-white/40 hover:text-white/70 transition-colors">Home</a>
+          <i data-lucide="chevron-right" class="w-3 h-3 text-white/20"></i>
+          <a href="services.html" class="text-white/40 hover:text-white/70 transition-colors">Services</a>
+          <i data-lucide="chevron-right" class="w-3 h-3 text-white/20"></i>
+          <span class="text-pka-orange font-medium">Tax Planning & Filing</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="pb-14 sm:pb-20 md:pb-24 bg-gradient-to-b from-pka-dark to-slate-900 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image:radial-gradient(rgba(249,115,22,.3) 1px,transparent 1px);background-size:32px 32px"></div>
+      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-pka-orange/8 blur-[140px] pointer-events-none"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 pt-10 sm:pt-14">
+        <div class="afu max-w-3xl">
+          <span class="inline-block py-1.5 px-4 rounded-full bg-orange-500/10 border border-orange-500/20 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-pka-orange mb-5 sm:mb-6">Service</span>
+          <h1 class="text-[28px] sm:text-5xl md:text-6xl font-extrabold text-white leading-[1.1] mb-4 sm:mb-5" style="letter-spacing:.01em">Tax Planning & Filing</h1>
+          <p class="text-white/80 text-[16px] sm:text-xl md:text-2xl leading-relaxed max-w-2xl mb-3 font-semibold">Pay less tax, legally.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="py-16 sm:py-24 md:py-28 bg-white dark:bg-slate-900/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <div class="inline-flex items-center gap-2.5 bg-pka-orange/10 text-pka-orange px-4 py-2 rounded-full mb-5 sm:mb-7">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span class="text-[11px] sm:text-[12px] font-bold tracking-[.12em] uppercase">Overview</span>
+          </div>
+          <h2 class="text-[24px] sm:text-[32px] md:text-[38px] font-extrabold tracking-tight leading-tight mb-5 sm:mb-6">Proactive tax strategy that <span class="text-pka-orange">minimizes liability</span></h2>
+          <p class="text-pka-muted text-[15px] sm:text-[16px] leading-[1.75] mb-4 sm:mb-5">Proactive tax strategy that minimizes your liability year-round — not just at filing time. We identify every deduction, allowance, and optimization opportunity available to your specific business structure and industry under Kenyan tax law. Our tax team doesn't just file your returns; they architect your tax position to keep more money in your company.</p>
+          <p class="text-pka-muted text-[15px] sm:text-[16px] leading-[1.75]">The biggest mistake businesses make with taxes is treating them as a year-end event. By the time June arrives, most optimization opportunities have already passed. At PKA, tax planning is a continuous process. We model scenarios quarterly, estimate your tax liability in real-time, and make strategic moves throughout the year — like timing capital purchases, optimizing salary vs dividend splits, and accelerating or deferring income — to minimize what you owe. When filing season comes, your return is essentially already built.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT WE DO -->
+    <section class="py-16 sm:py-24 md:py-28 bg-pka-bg dark:bg-pka-dark relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-[400px] h-[400px] bg-pka-orange/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 relative z-10">
+        <div class="reveal text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <div class="inline-flex items-center gap-2.5 bg-pka-blue/10 text-pka-blue px-4 py-2 rounded-full mb-5 sm:mb-7">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+            <span class="text-[11px] sm:text-[12px] font-bold tracking-[.12em] uppercase">What We Do</span>
+          </div>
+          <h2 class="text-[24px] sm:text-[32px] md:text-[40px] font-extrabold tracking-tight leading-tight mb-3 sm:mb-4">Every capability <span class="text-pka-blue">included</span></h2>
+          <p class="text-pka-muted leading-relaxed text-[15px] sm:text-[17px]">Every capability included in this service:</p>
+        </div>
+        <div class="fp-feature-grid max-w-5xl mx-auto">
+          <div class="reveal fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Year-round proactive tax strategy sessions</span></div>
+          <div class="reveal d1 fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Corporate income tax & individual income tax return filing via iTax</span></div>
+          <div class="reveal fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">VAT returns & compliance management</span></div>
+          <div class="reveal d2 fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">PAYE withholding tax management & filing</span></div>
+          <div class="reveal fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Withholding tax (WHT) compliance across all categories</span></div>
+          <div class="reveal d1 fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Quarterly installment tax payment calculations</span></div>
+          <div class="reveal fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Capital allowances & investment deduction optimization</span></div>
+          <div class="reveal d2 fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">KRA audit representation & defence</span></div>
+          <div class="reveal fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Turnover Tax compliance for small businesses</span></div>
+          <div class="reveal d1 fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Entity structure tax comparison (Sole Prop vs Partnership vs Ltd)</span></div>
+          <div class="reveal fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Tax incentive identification (EPZ, SEZ, investment deductions)</span></div>
+          <div class="reveal d2 fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Cross-border & East African Community tax considerations</span></div>
+          <div class="reveal fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">eTIMS integration & compliant invoice management</span></div>
+          <div class="reveal d1 fp-feature-item group bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-pka-border/50 dark:border-slate-700/50"><div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-50 dark:bg-orange-900/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5 text-pka-orange"></i></div><span class="text-[13px] sm:text-[14px] leading-snug self-center text-pka-text dark:text-white">Salary vs dividend optimisation for company directors</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="py-16 sm:py-24 md:py-28 bg-white dark:bg-slate-900/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8">
+        <div class="reveal text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <div class="inline-flex items-center gap-2.5 bg-pka-green/10 text-pka-green px-4 py-2 rounded-full mb-5 sm:mb-7">
+            <i data-lucide="git-branch" class="w-4 h-4"></i>
+            <span class="text-[11px] sm:text-[12px] font-bold tracking-[.12em] uppercase">How It Works</span>
+          </div>
+          <h2 class="text-[24px] sm:text-[32px] md:text-[40px] font-extrabold tracking-tight leading-tight mb-3 sm:mb-4">Our proven <span class="text-pka-green">process</span></h2>
+          <p class="text-pka-muted leading-relaxed text-[15px] sm:text-[17px]">Our proven process from start to finish:</p>
+        </div>
+        <div class="reveal max-w-2xl mx-auto">
+          <div class="fp-process-step"><div class="fp-process-dot bg-pka-orange">1</div><div class="pt-1"><h3 class="font-bold text-[16px] sm:text-[18px] mb-2">Tax Health Assessment</h3><p class="text-pka-muted text-[14px] sm:text-[15px] leading-relaxed">We review your last 3 years of returns, current financials, and business structure to identify immediate opportunities and potential risks. This usually uncovers KES 500K+ in missed deductions and allowances.</p></div></div>
+          <div class="fp-process-step"><div class="fp-process-dot bg-pka-orange">2</div><div class="pt-1"><h3 class="font-bold text-[16px] sm:text-[18px] mb-2">Strategy Development</h3><p class="text-pka-muted text-[14px] sm:text-[15px] leading-relaxed">We build a customized tax plan that maps out moves for each quarter — when to make capital purchases, how to structure director remuneration, how to handle dividends, and which allowances to claim.</p></div></div>
+          <div class="fp-process-step"><div class="fp-process-dot bg-pka-orange">3</div><div class="pt-1"><h3 class="font-bold text-[16px] sm:text-[18px] mb-2">Quarterly Implementation</h3><p class="text-pka-muted text-[14px] sm:text-[15px] leading-relaxed">Each quarter, we execute the plan, adjust projections based on actual results, and meet with you to discuss any changes in your business that affect your tax position.</p></div></div>
+          <div class="fp-process-step"><div class="fp-process-dot bg-pka-orange">4</div><div class="pt-1"><h3 class="font-bold text-[16px] sm:text-[18px] mb-2">Filing & Year-End</h3><p class="text-pka-muted text-[14px] sm:text-[15px] leading-relaxed">We prepare and file all returns via iTax, ensure every deduction and allowance is captured, and provide a clear summary of your tax position. If you're audited by KRA, we represent you at no additional cost.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT'S INCLUDED -->
+    <section class="py-16 sm:py-24 md:py-28 bg-pka-bg dark:bg-pka-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8">
+        <div class="reveal text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <div class="inline-flex items-center gap-2.5 bg-pka-orange/10 text-pka-orange px-4 py-2 rounded-full mb-5 sm:mb-7">
+            <i data-lucide="package-check" class="w-4 h-4"></i>
+            <span class="text-[11px] sm:text-[12px] font-bold tracking-[.12em] uppercase">What's Included</span>
+          </div>
+          <h2 class="text-[24px] sm:text-[32px] md:text-[40px] font-extrabold tracking-tight leading-tight">Everything you get, <span class="text-pka-orange">every engagement</span></h2>
+        </div>
+        <div class="reveal max-w-2xl mx-auto bg-white dark:bg-slate-800/50 rounded-3xl p-7 sm:p-10 border border-pka-border/50 dark:border-slate-700/50 shadow-xl">
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">Individual income tax returns via iTax (business owners)</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">Corporate tax returns for all entity types</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">VAT, PAYE & WHT returns filed on time, every time</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">Quarterly tax planning meetings</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">Real-time tax liability dashboard</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">Tax projection updates throughout the year</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">Year-end tax planning memo with recommendations</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">iTax online filing for all returns</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+          <div class="fp-include-row"><span class="text-[13px] sm:text-[14px] text-pka-text dark:text-white font-medium">KRA audit support if selected for examination</span><i data-lucide="check" class="w-5 h-5 flex-shrink-0 ml-3 text-pka-orange"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 sm:py-24 md:py-28 bg-pka-dark relative overflow-hidden">
+      <div class="absolute inset-0 opacity-20" style="background-image:radial-gradient(rgba(249,115,22,.4) 1px,transparent 1px);background-size:32px 32px"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pka-orange/5 rounded-full blur-[120px]"></div>
+      <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-5 lg:px-8 text-center">
+        <div class="reveal">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 bg-pka-orange/10 rounded-2xl flex items-center justify-center mx-auto mb-5 sm:mb-6"><i data-lucide="receipt" class="w-7 h-7 sm:w-8 sm:h-8 text-pka-orange"></i></div>
+          <h2 class="text-[22px] sm:text-3xl md:text-[42px] font-bold text-white tracking-[-0.01em] leading-[1.15] mb-4 sm:mb-5">Ready to pay <span class="text-pka-orange">less in taxes?</span></h2>
+          <p class="text-slate-400 text-[14px] sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-2xl mx-auto">Business owners who feel they're paying too much in taxes, companies with complex VAT or PAYE obligations. Book a free tax health assessment and we'll show you exactly how much you could save.</p>
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center">
+            <a href="contact.html" class="magnetic-btn group inline-flex items-center justify-center gap-2 bg-pka-orange text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-[13px] sm:text-base font-bold hover:bg-pka-orange-dark transition-all shadow-xl shadow-orange-500/30 hover:scale-[1.02] active:scale-[0.98]">Book Free Consultation <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"></i></a>
+            <a href="tel:+254720854756" class="inline-flex items-center justify-center gap-2 bg-white/10 text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-[13px] sm:text-base font-semibold hover:bg-white/20 transition-colors border border-white/10 backdrop-blur-sm"><i data-lucide="phone" class="w-4 h-4"></i>+254 720 854 756</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-pka-dark text-white pt-14 sm:pt-20 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-10 sm:mb-16">
+        <div class="sm:col-span-2 lg:col-span-1">
+          <a href="index.html" class="flex items-center mb-5"><img src="logo.png" alt="PKA Logo" class="h-[2rem] sm:h-[2.5rem] w-auto object-contain"></a>
+          <p class="text-white/40 text-[12px] sm:text-[13px] leading-relaxed mb-5">Smart accounting and advisory services for Kenyan businesses that want to grow with confidence.</p>
+          <div class="flex gap-2.5">
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram"><svg class="w-[18px] h-[18px] text-white/60" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook"><svg class="w-[18px] h-[18px] text-white/60" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><svg class="w-[18px] h-[18px] text-white/60" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-semibold text-[13px] sm:text-[14px] mb-4">Services</h4>
+          <ul class="space-y-2 sm:space-y-2.5">
+            <li><a href="service-bookkeeping.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Bookkeeping</a></li>
+            <li><a href="service-tax.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Tax Planning &amp; Filing</a></li>
+            <li><a href="service-advisory.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Financial Advisory</a></li>
+            <li><a href="service-payroll.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Payroll Services</a></li>
+            <li><a href="service-audit.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Audit &amp; Assurance</a></li>
+            <li><a href="service-formation.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Business Formation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-[13px] sm:text-[14px] mb-4">Company</h4>
+          <ul class="space-y-2 sm:space-y-2.5">
+            <li><a href="about.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">About Us</a></li>
+            <li><a href="team.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Our Team</a></li>
+            <li><a href="industries.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Industries</a></li>
+            <li><a href="contact.html" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-[13px] sm:text-[14px] mb-4">Quick Contact</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-pka-orange flex-shrink-0 mt-0.5"></i><span class="text-white/40 text-[12px] sm:text-[13px] leading-relaxed">Parklands/Highridge, Nairobi</span></li>
+            <li class="flex items-center gap-2.5"><i data-lucide="mail" class="w-4 h-4 text-pka-orange flex-shrink-0"></i><a href="mailto:info@pka.co.ke" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">info@pka.co.ke</a></li>
+            <li class="flex items-center gap-2.5"><i data-lucide="phone" class="w-4 h-4 text-pka-orange flex-shrink-0"></i><a href="tel:+254720854756" class="text-white/40 text-[12px] sm:text-[13px] hover:text-white transition-colors">+254 720 854 756</a></li>
+            <li class="flex items-center gap-2.5"><i data-lucide="clock" class="w-4 h-4 text-pka-orange flex-shrink-0"></i><span class="text-white/40 text-[12px] sm:text-[13px]">Mon-Fri 8:30–5:00</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/8 pt-6 sm:pt-7 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-white/25 text-[11px] sm:text-[12px]">&copy; 2026 PKA Accounting &amp; Advisory. All rights reserved.</p>
+        <div class="flex gap-4 sm:gap-5">
+          <a href="#" class="text-white/25 text-[11px] sm:text-[12px] hover:text-white/50 transition-colors">Privacy Policy</a>
+          <a href="#" class="text-white/25 text-[11px] sm:text-[12px] hover:text-white/50 transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- STICKY MOBILE CTA -->
+  <div id="sticky-cta" class="sm:hidden">
+    <div class="bg-white/95 dark:bg-slate-800/95 backdrop-blur-lg border-t border-pka-border/50 dark:border-slate-700/50 px-4 py-3 flex items-center gap-3">
+      <a href="contact.html" class="flex-1 bg-pka-orange text-white py-3 rounded-full text-[13px] font-semibold text-center hover:bg-pka-orange-dark transition-colors">Free Consultation</a>
+      <a href="tel:+254720854756" class="w-11 h-11 bg-pka-dark dark:bg-white text-white dark:text-pka-dark rounded-full flex items-center justify-center flex-shrink-0"><i data-lucide="phone" class="w-4 h-4"></i></a>
+    </div>
+  </div>
+
+  <!-- COOKIE BANNER -->
+  <div id="cookie-banner">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <p class="text-white/60 text-[12px] sm:text-[13px] leading-relaxed text-center sm:text-left">We use cookies to enhance your experience. By continuing, you agree to our <a href="#" class="text-white/80 underline hover:text-white">Privacy Policy</a>.</p>
+      <div class="flex gap-2.5 flex-shrink-0">
+        <button onclick="dismissCookie()" class="bg-pka-orange text-white px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-semibold hover:bg-pka-orange-dark transition-colors">Accept</button>
+        <button onclick="dismissCookie()" class="bg-white/10 text-white/70 px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-medium hover:bg-white/20 transition-colors">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- BACK TO TOP -->
+  <button id="btt" class="btt fixed bottom-6 left-6 z-50 w-11 h-11 bg-pka-dark text-white rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-4 pointer-events-none hover:bg-pka-orange" aria-label="Back to top"><i data-lucide="chevron-up" class="w-5 h-5"></i></button>
+
+  <script>
+    // ===== INIT ICONS =====
+    lucide.createIcons();
+
+    // ===== THEME =====
+    var htmlEl = document.documentElement;
+    if (localStorage.getItem('theme') === 'dark') htmlEl.classList.add('dark');
+    function toggleTheme() {
+      htmlEl.classList.toggle('dark');
+      var isDark = htmlEl.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      showToast(isDark ? 'Dark mode enabled' : 'Light mode enabled', isDark ? '#3B82F6' : '#F59E0B');
+    }
+
+    // ===== TOAST =====
+    function showToast(msg, color) {
+      var c = document.getElementById('toast-container');
+      var t = document.createElement('div');
+      t.className = 'toast';
+      t.style.background = color || '#F97316';
+      t.innerHTML = '<span>' + msg + '</span>';
+      c.appendChild(t);
+      setTimeout(function() { t.classList.add('toast-hide'); setTimeout(function() { t.remove(); }, 300); }, 2500);
+    }
+
+    // ===== MOBILE MENU + FOCUS TRAP =====
+    var mobMenu = document.getElementById('mob-menu');
+    var mobOpen = document.getElementById('mob-open');
+    var mobClose = document.getElementById('mob-close');
+    var prevFocus = null;
+    function openMenu() { prevFocus = document.activeElement; mobMenu.classList.add('open'); document.body.style.overflow = 'hidden'; setTimeout(function() { mobClose.focus(); }, 100); }
+    function closeMenu() { mobMenu.classList.remove('open'); document.body.style.overflow = ''; if (prevFocus) prevFocus.focus(); }
+    mobOpen.onclick = openMenu;
+    mobClose.onclick = closeMenu;
+    document.querySelectorAll('#mob-menu a').forEach(function(l) { l.onclick = closeMenu; });
+    mobMenu.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeMenu(); return; }
+      if (e.key !== 'Tab') return;
+      var f = mobMenu.querySelectorAll('a[href], button');
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    // ===== SCROLL PROGRESS =====
+    var progressBar = document.getElementById('scroll-progress');
+    function updateProgress() { var h = document.documentElement.scrollHeight - window.innerHeight; progressBar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0'; }
+    window.addEventListener('scroll', updateProgress);
+
+    // ===== REVEAL =====
+    var ro = new IntersectionObserver(function(es) {
+      es.forEach(function(e) {
+        if (e.isIntersecting) {
+          var delay = 0;
+          if (e.target.classList.contains('d1')) delay = 100;
+          if (e.target.classList.contains('d2')) delay = 200;
+          if (e.target.classList.contains('d3')) delay = 300;
+          if (e.target.classList.contains('d4')) delay = 400;
+          setTimeout(function() { e.target.classList.add('vis'); }, delay);
+          ro.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(e) { ro.observe(e); });
+
+    // ===== MAGNETIC BUTTONS (desktop only) =====
+    if (window.matchMedia('(min-width: 1024px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.magnetic-btn').forEach(function(btn) {
+        btn.addEventListener('mousemove', function(e) {
+          var rect = btn.getBoundingClientRect();
+          var x = e.clientX - rect.left - rect.width / 2;
+          var y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = 'translate(' + (x * 0.15) + 'px, ' + (y * 0.15) + 'px)';
+        });
+        btn.addEventListener('mouseleave', function() { btn.style.transform = ''; btn.style.transition = 'transform 0.3s ease'; setTimeout(function() { btn.style.transition = ''; }, 300); });
+      });
+    }
+
+    // ===== STICKY CTA (mobile) =====
+    var stickyCta = document.getElementById('sticky-cta');
+    var footer = document.getElementById('site-footer');
+    var stickyVisible = false;
+    function updateStickyCta() {
+      if (!stickyCta) return;
+      var scrollY = window.scrollY;
+      var footerTop = footer ? footer.getBoundingClientRect().top + scrollY : document.body.scrollHeight;
+      var showAfter = window.innerHeight * 0.9;
+      if (scrollY > showAfter && scrollY + window.innerHeight < footerTop - 50) {
+        if (!stickyVisible) { stickyCta.classList.add('show'); stickyVisible = true; }
+      } else {
+        if (stickyVisible) { stickyCta.classList.remove('show'); stickyVisible = false; }
+      }
+    }
+    stickyCta.style.transition = "transform .4s cubic-bezier(.25,.46,.45,.94)";
+    stickyCta.style.position = "fixed"; stickyCta.style.bottom = "0"; stickyCta.style.left = "0"; stickyCta.style.right = "0"; stickyCta.style.zIndex = "40";
+    stickyCta.style.transform = "translateY(100%)";
+    function toggleSticky() {
+      if (window.scrollY > window.innerHeight * 0.9 && window.scrollY + window.innerHeight < document.body.scrollHeight - 600) {
+        stickyCta.style.transform = "translateY(0)";
+      } else {
+        stickyCta.style.transform = "translateY(100%)";
+      }
+    }
+    window.addEventListener('scroll', toggleSticky);
+
+    // ===== COOKIE BANNER =====
+    function showCookie() { if (!localStorage.getItem('cookie-dismissed')) { setTimeout(function() { document.getElementById('cookie-banner').classList.add('show'); }, 2000); } }
+    function dismissCookie() { document.getElementById('cookie-banner').classList.remove('show'); localStorage.setItem('cookie-dismissed', 'true'); }
+    showCookie();
+
+    // ===== BACK TO TOP =====
+    var btt = document.getElementById('btt');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 500) { btt.style.opacity = '1'; btt.style.transform = 'translateY(0)'; btt.style.pointerEvents = 'auto'; }
+      else { btt.style.opacity = '0'; btt.style.transform = 'translateY(16px)'; btt.style.pointerEvents = 'none'; }
+    });
+    btt.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  </script>
+</body>
+</html>
